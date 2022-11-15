@@ -1,14 +1,29 @@
+/* 
+  Drag And Drop Events:
+
+  Source        Target
+  _______       ________
+  onDrag        onDragOver
+  onDragStart   onDragEnter
+  onDragEnd     onDragLeave
+                onDrop
+
+  DataTransfer object 
+    Is used to hold the data that is being dragged during a drag and drop operation.
+
+  DataTransfer.getData()
+    Retrieves the data for a given type, or an empty string if data for that type does not exist 
+    or the data transfer contains no data
+
+  DataTransfer.setData()
+    Set the data for a given type. 
+    If data for the type does not exist, it is added at the end, such that the last item in the types list will be the new format. 
+    If data for the type already exists, the existing data is replaced in the same position.
+
+*/
+
 export function dragStart(ev) {
     ev.dataTransfer.setData("Text", JSON.stringify({id: ev.target.id, color: ev.target.dataset.color}));
-    /*
-    DataTransfer object 
-      Is used to hold the data that is being dragged during a drag and drop operation.
-
-    DataTransfer.setData()
-      Set the data for a given type. 
-      If data for the type does not exist, it is added at the end, such that the last item in the types list will be the new format. 
-      If data for the type already exists, the existing data is replaced in the same position.
-    */
   }
 
 export function enteringSquare(ev){
@@ -45,27 +60,8 @@ export function drop(ev) {
       ev.target.style.backgroundColor = ev.target.parentNode?.dataset?.squarecolor
       ev.target.parentNode.backgroundColor = ev.target.parentNode?.dataset?.squarecolor
     }
-
-    /*
-    DataTransfer object 
-      Is used to hold the data that is being dragged during a drag and drop operation.
-
-    DataTransfer.getData()
-      Retrieves the data for a given type, or an empty string if data for that type does not exist 
-      or the data transfer contains no data
-    */
   }
 
-  /* 
-  Drag And Drop Events:
 
-  Source        Target
-  _______       ________
-  onDrag        onDragOver
-  onDragStart   onDragEnter
-  onDragEnd     onDragLeave
-                onDrop
-
-  */
 
 
