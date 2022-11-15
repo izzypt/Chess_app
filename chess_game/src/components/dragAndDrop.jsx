@@ -1,3 +1,5 @@
+import { moveIsValid } from './validMoves'
+
 /* 
   Drag And Drop Events:
 
@@ -22,8 +24,9 @@
 
 */
 
+
 export function dragStart(ev) {
-    ev.dataTransfer.setData("Text", JSON.stringify({id: ev.target.id, color: ev.target.dataset.color}));
+    ev.dataTransfer.setData("Text", JSON.stringify({id: ev.target.id, piece: ev.target.dataset.piece, color: ev.target.dataset.color, initialPosition: ev.target.parentNode.id}));
   }
 
 export function enteringSquare(ev){
@@ -40,26 +43,32 @@ export function allowDrop(ev) {
 
 export function drop(ev) {
     ev.preventDefault();
-    //Set the background to original color on droping the piece:
-    ev.target.style.backgroundColor = ev.target.dataset.squarecolor
-    //Save moving piece data into an object:
+    let  opponentColor  = ev.target?.dataset?.color
     let movingPiece = JSON.parse(ev.dataTransfer.getData("Text"))
+    let dropLocation = ev.target.nodeName === 'DIV' ? ev.target.id : ev.target.parentNode.id
+
+    console.log("dropLocation: ", dropLocation)
+    
     //Make sure white pieces can only take black pieces and vice-versa.
-    if ((movingPiece.color === 'white' && ev.target?.dataset?.color === 'black' && ev.target.nodeName === 'IMG') ||
-        (movingPiece.color === 'black' && ev.target?.dataset?.color === 'white' && ev.target.nodeName === 'IMG')) 
+    if ((movingPiece.color === 'white' && opponentColor === 'black' && ev.target.nodeName === 'IMG') ||
+        (movingPiece.color === 'black' && opponentColor === 'white' && ev.target.nodeName === 'IMG')) 
     {
-      ev.target.parentNode.append(document.getElementById(movingPiece.id)); 
-      ev.target.remove()
+      if(moveIsValid(movingPiece, dropLocation, true)){
+        ev.target.parentNode.append(document.getElementById(movingPiece.id)); 
+        ev.target.remove()
+      }
     }
     if (ev.target.nodeName === 'DIV') {
-      console.log(ev.target.id)
-      ev.target.append(document.getElementById(movingPiece.id)); 
+      if(moveIsValid(movingPiece, dropLocation, false)){
+        //if we are dropping on a free square just append the piece
+        ev.target.append(document.getElementById(movingPiece.id)); 
+      }
     }
-    if (ev.target.nodeName === 'IMG') {
-      console.log(ev.target.parentNode?.id)
+    //if we are dropping on an occupied squared reset the drag color according to the parent node default color
+    if (ev.target.nodeName === 'IMG') 
       ev.target.style.backgroundColor = ev.target.parentNode?.dataset?.squarecolor
-      ev.target.parentNode.backgroundColor = ev.target.parentNode?.dataset?.squarecolor
-    }
+    else     
+      ev.target.style.backgroundColor = ev.target.dataset.squarecolor
   }
 
 

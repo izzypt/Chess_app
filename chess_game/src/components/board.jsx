@@ -21,24 +21,28 @@ function Board() {
             /* Green squares */
             squares.push(
                 <div 
-                key={Math.random()}
-                id={i}
-                data-squarecolor="#7d945d" 
-                style={{width:60, height:60, backgroundColor:'#7d945d'}} 
-                onDrop={drop} 
-                onDragOver={allowDrop} 
-                onDragEnter={enteringSquare} 
-                onDragLeave={leavingSquare}
+                    key={i}
+                    id={i}
+                    data-squarecolor="#7d945d" 
+                    style={{width:60, height:60, backgroundColor:'#7d945d'}} 
+                    onDrop={drop} 
+                    onDragOver={allowDrop} 
+                    onDragEnter={enteringSquare} 
+                    onDragLeave={leavingSquare}
                 >
-                { getPiece(i) ? <img 
-                    draggable="true" 
-                    onDragStart={dragStart}
-                    key={Math.random()}
-                    id={getPiece(i).id} 
-                    src={getPiece(i).src} 
-                    data-color={getPiece(i).color}
-                    alt ="black_bishop" 
-                    ></img> : null
+                    
+                { getPiece(i) ? 
+                    <img 
+                        draggable="true" 
+                        onDragStart={dragStart}
+                        key={i}
+                        id={getPiece(i).id} 
+                        src={getPiece(i).src} 
+                        data-color={getPiece(i).color}
+                        data-piece={getPiece(i).piece}
+                        alt ={getPiece(i).alt} 
+                    ></img> : 
+                    null
                 }
                 </div>)
             }
@@ -47,26 +51,28 @@ function Board() {
             {
             squares.push(
                 <div 
-                key={Math.random()}
-                id={i}
-                data-squarecolor="#eeeed5" 
-                style={{width:60, height:60, backgroundColor:'#eeeed5', zIndex: 1}} 
-                onDrop={drop} 
-                onDragOver={allowDrop} 
-                onDragEnter={enteringSquare} 
-                onDragLeave={leavingSquare}
+                    key={i}
+                    id={i}
+                    data-squarecolor="#eeeed5" 
+                    onDrop={drop} 
+                    onDragOver={allowDrop} 
+                    onDragEnter={enteringSquare} 
+                    onDragLeave={leavingSquare}
+                    style={{width:60, height:60, backgroundColor:'#eeeed5'}} 
                 >
-                { getPiece(i) ? <img 
-                    key={Math.random()}
-                    id={getPiece(i).id} 
-                    src={getPiece(i).src} 
-                    alt ={getPiece(i).alt}
-                    data-color={getPiece(i).color}
-                    draggable="true" 
-                    onDragStart={dragStart}
-                    >
-                    </img> : null
-                }
+                    { getPiece(i) ? 
+                        <img 
+                            id={getPiece(i).id} 
+                            draggable="true" 
+                            onDragStart={dragStart}
+                            key={i}
+                            src={getPiece(i).src} 
+                            alt ={getPiece(i).alt}
+                            data-color={getPiece(i).color}
+                            data-piece={getPiece(i).piece}
+                        ></img> : 
+                        null
+                    }
                 </div>)
             }
             i++
