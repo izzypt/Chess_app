@@ -1,3 +1,11 @@
+import { useState } from "react";
+import { dragStart } from './dragAndDrop'
+
+const getPiece = (i) => {
+  /* Return piece for the corresponding position on the board */
+  return pieces.find((piece) => piece.position === i)
+}
+
 const pieces = [
     {
       id: "blockRook",
@@ -257,4 +265,28 @@ const pieces = [
     },
   ]
 
-export default pieces;
+const Piece = (props) => {
+  const [firstMove, setFirstMove] = useState(true)
+  let piece = getPiece(props.i)
+
+  const handleFirstmove = () => {
+    setFirstMove(false)
+  }
+  
+  return (
+    piece ? 
+      <img
+        draggable="true" 
+        onDragStart={dragStart}
+        id={piece.id} 
+        src={piece.src} 
+        data-color={piece.color}
+        data-piece={piece.piece}
+        data-firstmove={firstMove}
+        alt ={piece.alt} 
+      ></img> 
+      : null
+  )
+}
+
+export default Piece;

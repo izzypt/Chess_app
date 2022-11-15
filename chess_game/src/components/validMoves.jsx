@@ -1,11 +1,7 @@
 export function moveIsValid(movingPiece, dropLocation, enemyPiece) {
 
     let squares = document.getElementById("boardContainer").children
-    console.log(typeof squares)
-    console.log(typeof squares[0])
-    console.log(typeof squares.children)
-    console.log(squares)
-    console.log(squares[0])
+    console.log(squares[movingPiece.initialPosition])
     if (movingPiece.piece === 'pawn')
     {
         if (movingPiece.color === 'black' && (dropLocation == parseInt(movingPiece.initialPosition) + 8 || dropLocation == parseInt(movingPiece.initialPosition) + 8*2) && !enemyPiece){
@@ -27,3 +23,4 @@ export function moveIsValid(movingPiece, dropLocation, enemyPiece) {
         return false
     }
 }
+
