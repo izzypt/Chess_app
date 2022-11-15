@@ -29,7 +29,7 @@ export function drop(ev) {
     ev.target.style.backgroundColor = ev.target.dataset.squarecolor
     //Save moving piece data into an object:
     let movingPiece = JSON.parse(ev.dataTransfer.getData("Text"))
-    console.log(movingPiece.color, ev.target?.dataset?.color, ev.target.nodeName)
+    //Make sure white pieces can only take black pieces and vice-versa.
     if ((movingPiece.color === 'white' && ev.target?.dataset?.color === 'black' && ev.target.nodeName === 'IMG') ||
         (movingPiece.color === 'black' && ev.target?.dataset?.color === 'white' && ev.target.nodeName === 'IMG')) 
     {
@@ -37,7 +37,13 @@ export function drop(ev) {
       ev.target.remove()
     }
     if (ev.target.nodeName === 'DIV') {
+      console.log(ev.target.id)
       ev.target.append(document.getElementById(movingPiece.id)); 
+    }
+    if (ev.target.nodeName === 'IMG') {
+      console.log(ev.target.parentNode?.id)
+      ev.target.style.backgroundColor = ev.target.parentNode?.dataset?.squarecolor
+      ev.target.parentNode.backgroundColor = ev.target.parentNode?.dataset?.squarecolor
     }
 
     /*
@@ -49,5 +55,17 @@ export function drop(ev) {
       or the data transfer contains no data
     */
   }
+
+  /* 
+  Drag And Drop Events:
+
+  Source        Target
+  _______       ________
+  onDrag        onDragOver
+  onDragStart   onDragEnter
+  onDragEnd     onDragLeave
+                onDrop
+
+  */
 
 

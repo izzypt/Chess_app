@@ -22,6 +22,7 @@ function Board() {
             squares.push(
                 <div 
                 key={Math.random()}
+                id={i}
                 data-squarecolor="#7d945d" 
                 style={{width:60, height:60, backgroundColor:'#7d945d'}} 
                 onDrop={drop} 
@@ -47,6 +48,7 @@ function Board() {
             squares.push(
                 <div 
                 key={Math.random()}
+                id={i}
                 data-squarecolor="#eeeed5" 
                 style={{width:60, height:60, backgroundColor:'#eeeed5', zIndex: 1}} 
                 onDrop={drop} 
