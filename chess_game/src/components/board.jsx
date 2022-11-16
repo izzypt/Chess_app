@@ -25,7 +25,7 @@ function Board() {
                         onDragEnter={enteringSquare} 
                         onDragLeave={leavingSquare}
                     >
-                        { <Piece i={i} />}
+                        {<Piece i={i} />}
                     </div>
                 )
             }

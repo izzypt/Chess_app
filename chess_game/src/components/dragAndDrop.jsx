@@ -26,7 +26,6 @@ import { moveIsValid } from './validMoves'
 
 
 export function dragStart(ev) {
-    console.log(ev.target)
     ev.dataTransfer.setData("Text", JSON.stringify({id: ev.target.id, piece: ev.target.dataset.piece, color: ev.target.dataset.color, initialPosition: ev.target.parentNode.id, firstMove: ev.target.dataset.firstmove}));
   }
 
@@ -46,7 +45,7 @@ export function drop(ev) {
     ev.preventDefault();
     let  opponentColor  = ev.target?.dataset?.color
     let movingPiece = JSON.parse(ev.dataTransfer.getData("Text"))
-    let dropLocation = ev.target.nodeName === 'DIV' ? ev.target.id : ev.target.parentNode.id
+    let dropPosition = ev.target.nodeName === 'DIV' ? ev.target.id : ev.target.parentNode.id
 
     //Reset from hover color to original square color
     if (ev.target.nodeName === 'IMG') 
@@ -59,14 +58,14 @@ export function drop(ev) {
         (movingPiece.color === 'black' && opponentColor === 'white' && ev.target.nodeName === 'IMG')) 
     {
       //Check if the move is valid
-      if(moveIsValid(movingPiece, dropLocation, true)){
+      if(moveIsValid(movingPiece, dropPosition, true)){
         ev.target.parentNode.append(document.getElementById(movingPiece.id)); 
         ev.target.remove()
       }
     }
     //When droping on empty square:
     if (ev.target.nodeName === 'DIV') {
-      if(moveIsValid(movingPiece, dropLocation, false)){
+      if(moveIsValid(movingPiece, dropPosition, false)){
         //if we are dropping on a free square just append the piece
         ev.target.append(document.getElementById(movingPiece.id)); 
       }
