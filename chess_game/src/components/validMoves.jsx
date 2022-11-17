@@ -1,4 +1,4 @@
-function boardMatrix(){
+const boardMatrix = () => {
     let board = [[],[],[],[],[],[],[],[],]
     let squares = document.getElementById("boardContainer").children
     let row = 0;
@@ -12,7 +12,7 @@ function boardMatrix(){
     return board
 }
 
-function findMatrixCoordinates(position){
+const findMatrixCoordinates = (position) => {
     let coordinates = []
     boardMatrix().map((row, rowIndex) => {
         return row.forEach((square, squareIndex) => {
@@ -23,7 +23,7 @@ function findMatrixCoordinates(position){
     return coordinates
 }
 
-function check_X_Y_Axis(board, initialX, finalX, initialY, finalY, enemyPiece){
+const check_X_Y_Axis = (board, initialX, finalX, initialY, finalY, enemyPiece) => {
     // Y axis
     while (initialY !== finalY){
         if(initialY > finalY ){
@@ -86,7 +86,7 @@ function checkDiagonal(board, initialX, finalX, initialY, finalY, enemyPiece){
     return true
 }
 
-export function moveIsValid(movingPiece, dropPosition, enemyPiece) {
+export const moveIsValid = (movingPiece, dropPosition, enemyPiece) => {
     //get board matrix.
     let board = boardMatrix();
     //get coordinates of the piece position on the matrix.
