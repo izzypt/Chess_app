@@ -54,23 +54,19 @@ export function drop(ev) {
     else     
       ev.target.style.backgroundColor = ev.target.dataset.squarecolor
     
-    //Make sure white pieces can only take black pieces and vice-versa.
-    if ((movingPiece.color === 'white' && opponentColor === 'black' && targetedSquare === 'IMG') ||
-        (movingPiece.color === 'black' && opponentColor === 'white' && targetedSquare === 'IMG')) 
-    {
-      //Check if the move is valid
-      if(moveIsValid(movingPiece, dropPosition, true)){
+    //White pieces can only take black pieces and vice-versa, also check move validity,
+    if (
+        ((movingPiece.color === 'white' && opponentColor === 'black' && targetedSquare === 'IMG') || 
+        (movingPiece.color === 'black' && opponentColor === 'white' && targetedSquare === 'IMG')) && 
+        moveIsValid(movingPiece, dropPosition, true)
+      ){
         ev.target.parentNode.append(document.getElementById(movingPiece.id)); 
         ev.target.remove()
-        console.log(movingPiece)
       }
-    }
     //When droping on empty square:
-    if (targetedSquare === 'DIV') {
-      if(moveIsValid(movingPiece, dropPosition, false)){
-        //if we are dropping on a free square just append the piece
+    if (targetedSquare === 'DIV' && moveIsValid(movingPiece, dropPosition, false)) {
         ev.target.append(document.getElementById(movingPiece.id)); 
-      }
+
     }
   }
 
