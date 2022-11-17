@@ -51,7 +51,7 @@ function check_X_Y_Axis(board, initialX, finalX, initialY, finalY, enemyPiece){
 }
 
 function checkDiagonal(board, initialX, finalX, initialY, finalY, enemyPiece){
-    while(initialX != finalX && initialY != finalY)
+    while(initialX !== finalX && initialY !== finalY)
     {
 
         if(initialX > finalX && initialY > finalY)
@@ -118,17 +118,6 @@ export function moveIsValid(movingPiece, dropPosition, enemyPiece) {
         }
         return false;
     }
-    /**********/
-    /* QUEEN */
-    /********/
-    if (movingPiece.piece === 'queen'){
-
-        if((variacaoX === 1 && variacaoY === 0) || (variacaoX === 0 && variacaoY === 1)  || (variacaoX === 1 && variacaoY === 1)|| variacaoX === variacaoY || !(initialX !== finalX && initialY !== finalY)){
-            return true;
-        }
-        else
-            console.log("invalid move")
-    }
     /*********/
     /* KING */
     /*******/
@@ -147,6 +136,23 @@ export function moveIsValid(movingPiece, dropPosition, enemyPiece) {
         if(initialX !== finalX && initialY !== finalY) {return false};
 
         return check_X_Y_Axis(board, initialX, finalX, initialY, finalY, enemyPiece)
+    }
+    /**********/
+    /* QUEEN */
+    /********/
+    if (movingPiece.piece === 'queen'){
+
+        if(variacaoX === variacaoY)
+            return checkDiagonal(board, initialX, finalX, initialY, finalY, enemyPiece)
+        
+        if(!(initialX !== finalX && initialY !== finalY))
+            return check_X_Y_Axis(board, initialX, finalX, initialY, finalY, enemyPiece)
+
+        if((variacaoX === 1 && variacaoY === 0) || (variacaoX === 0 && variacaoY === 1)  || (variacaoX === 1 && variacaoY === 1)){
+            return true;
+        }
+        
+        return false;
     }
     /*********/
     /* PAWN */

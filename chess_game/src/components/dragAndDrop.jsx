@@ -62,6 +62,7 @@ export function drop(ev) {
       if(moveIsValid(movingPiece, dropPosition, true)){
         ev.target.parentNode.append(document.getElementById(movingPiece.id)); 
         ev.target.remove()
+        console.log(movingPiece)
       }
     }
     //When droping on empty square:
