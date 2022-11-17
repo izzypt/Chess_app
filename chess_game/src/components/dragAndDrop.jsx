@@ -43,9 +43,10 @@ export function allowDrop(ev) {
 
 export function drop(ev) {
     ev.preventDefault();
-    let  opponentColor  = ev.target?.dataset?.color
+    let opponentColor  = ev.target?.dataset?.color
     let movingPiece = JSON.parse(ev.dataTransfer.getData("Text"))
     let dropPosition = ev.target.nodeName === 'DIV' ? ev.target.id : ev.target.parentNode.id
+    let targetedSquare = ev.target.nodeName
 
     //Reset from hover color to original square color
     if (ev.target.nodeName === 'IMG') 
@@ -54,8 +55,8 @@ export function drop(ev) {
       ev.target.style.backgroundColor = ev.target.dataset.squarecolor
     
     //Make sure white pieces can only take black pieces and vice-versa.
-    if ((movingPiece.color === 'white' && opponentColor === 'black' && ev.target.nodeName === 'IMG') ||
-        (movingPiece.color === 'black' && opponentColor === 'white' && ev.target.nodeName === 'IMG')) 
+    if ((movingPiece.color === 'white' && opponentColor === 'black' && targetedSquare === 'IMG') ||
+        (movingPiece.color === 'black' && opponentColor === 'white' && targetedSquare === 'IMG')) 
     {
       //Check if the move is valid
       if(moveIsValid(movingPiece, dropPosition, true)){
@@ -64,7 +65,7 @@ export function drop(ev) {
       }
     }
     //When droping on empty square:
-    if (ev.target.nodeName === 'DIV') {
+    if (targetedSquare === 'DIV') {
       if(moveIsValid(movingPiece, dropPosition, false)){
         //if we are dropping on a free square just append the piece
         ev.target.append(document.getElementById(movingPiece.id)); 
