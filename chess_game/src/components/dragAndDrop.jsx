@@ -65,6 +65,8 @@ export function drop(ev) {
       }
     //When droping on empty square:
     if (targetedSquare === 'DIV' && moveIsValid(movingPiece, dropPosition, false)) {
+        document.getElementById(movingPiece.id).setAttribute('data-firstmove', false)
+        console.log(document.getElementById(movingPiece.id))
         ev.target.append(document.getElementById(movingPiece.id)); 
 
     }

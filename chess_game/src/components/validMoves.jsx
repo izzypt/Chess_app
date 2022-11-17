@@ -159,19 +159,26 @@ export const moveIsValid = (movingPiece, dropPosition, enemyPiece) => {
     /*******/
     if (movingPiece.piece === 'pawn')
     {
-        if (movingPiece.color === 'black' && (dropPosition == parseInt(movingPiece.initialPosition) + 8 || dropPosition == parseInt(movingPiece.initialPosition) + 8*2) && !enemyPiece){
+        let initialPos = parseInt(movingPiece.initialPosition)
+        let dropPos = parseInt(dropPosition)
+        let firstmove = movingPiece.firstMove
+
+        if ((movingPiece.color === 'black' && dropPos === initialPos + 8) && !enemyPiece || 
+            (movingPiece.color === 'white' && dropPos === initialPos - 8)  && !enemyPiece){
             return true
         }
 
-        if (movingPiece.color === 'white' && (dropPosition == parseInt(movingPiece.initialPosition) - 8 || dropPosition == parseInt(movingPiece.initialPosition) - 8*2) && !enemyPiece){
+        if ((movingPiece.color === 'black' && firstmove === "true" && dropPos === initialPos + 8*2) && !enemyPiece || 
+            (movingPiece.color === 'white' && firstmove === "true" && dropPos === initialPos - 8*2) && !enemyPiece){
+                return true
+            }
+            
+
+        if (enemyPiece && (movingPiece.color === 'white' && (dropPos === initialPos - 7 || dropPos === initialPos - 9))){
             return true
         }
 
-        if (enemyPiece && (movingPiece.color === 'white' && (dropPosition == parseInt(movingPiece.initialPosition) - 7 || dropPosition == parseInt(movingPiece.initialPosition) - 9))){
-            return true
-        }
-
-        if (enemyPiece && (movingPiece.color === 'black' && (dropPosition == parseInt(movingPiece.initialPosition) + 7 || dropPosition == parseInt(movingPiece.initialPosition) + 9))){
+        if (enemyPiece && (movingPiece.color === 'black' && (dropPos === initialPos + 7 || dropPos === initialPos + 9))){
             return true
         }
         return false

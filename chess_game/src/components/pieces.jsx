@@ -272,7 +272,7 @@ const Piece = (props) => {
   const handleFirstmove = () => {
     setFirstMove(false)
   }
-  
+
   return (
     piece ? 
       <img
