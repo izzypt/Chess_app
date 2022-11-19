@@ -2,7 +2,7 @@ import React from 'react'
 import { enteringSquare, leavingSquare, allowDrop, drop } from './dragAndDrop'
 import Piece from './pieces'
 
-function Board() {
+function Board(props) {
 
     const generateBoard = () => {
         let i = 0;
@@ -20,12 +20,12 @@ function Board() {
                         id={i}
                         data-squarecolor="#7d945d" 
                         style={{width:60, height:60, backgroundColor:'#7d945d'}} 
-                        onDrop={drop} 
+                        onDrop={ev => drop(ev, props.setColorToMove, props.colorToMove)} 
                         onDragOver={allowDrop} 
                         onDragEnter={enteringSquare} 
                         onDragLeave={leavingSquare}
                     >
-                        {<Piece i={i} />}
+                        {<Piece i={i} colorToMove={props.colorToMove} />}
                     </div>
                 )
             }
@@ -37,13 +37,13 @@ function Board() {
                         key={i}
                         id={i}
                         data-squarecolor="#eeeed5" 
-                        onDrop={drop} 
+                        onDrop={ev => drop(ev, props.setColorToMove, props.colorToMove)} 
                         onDragOver={allowDrop} 
                         onDragEnter={enteringSquare} 
                         onDragLeave={leavingSquare}
                         style={{width:60, height:60, backgroundColor:'#eeeed5'}} 
                     >
-                        { <Piece i={i} />}
+                        { <Piece i={i} colorToMove={props.colorToMove} />}
                     </div>
                 )
             }

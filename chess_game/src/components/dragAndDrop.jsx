@@ -24,13 +24,16 @@ import { moveIsValid } from './validMoves'
 
 */
 
-let colorToPlay = "white";
 
-export function dragStart(ev) {
+export function dragStart(ev, colorToPlay) {
   let playerColor = ev.target.getAttribute("data-color")
-  if (colorToPlay === playerColor)
-    ev.dataTransfer.setData("Text", JSON.stringify({id: ev.target.id, piece: ev.target.dataset.piece, color: ev.target.dataset.color, initialPosition: ev.target.parentNode.id, firstMove: ev.target.dataset.firstmove}));
-  else
+  colorToPlay === playerColor ? ev.dataTransfer.setData("Text", JSON.stringify({
+      id: ev.target.id, 
+      piece: ev.target.dataset.piece, 
+      color: ev.target.dataset.color, 
+      initialPosition: ev.target.parentNode.id, 
+      firstMove: ev.target.dataset.firstmove
+    })) :
     ev.preventDefault()
   }
 
@@ -46,7 +49,7 @@ export function allowDrop(ev) {
     ev.preventDefault();
   }
 
-export function drop(ev) {
+export function drop(ev, setColorToMove, colorToPlay) {
     ev.preventDefault();
     let opponentColor  = ev.target?.dataset?.color
     let movingPiece = JSON.parse(ev.dataTransfer.getData("Text"))
@@ -54,7 +57,7 @@ export function drop(ev) {
     let targetedSquare = ev.target.nodeName
 
     //Reset from hover color to original square color
-    ev.target.nodeName === 'IMG' ? ev.target.style.backgroundColor = ev.target.parentNode?.dataset?.squarecolor : ev.target.style.backgroundColor = ev.target.dataset.squarecolor  
+    targetedSquare === 'IMG' ? ev.target.style.backgroundColor = ev.target.parentNode?.dataset?.squarecolor : ev.target.style.backgroundColor = ev.target.dataset.squarecolor  
     
     //White pieces can only take black pieces and vice-versa, also check if move is valid.
     if (
@@ -63,7 +66,7 @@ export function drop(ev) {
         moveIsValid(movingPiece, dropPosition, true)
       ){
         //Change the turn to next color
-        colorToPlay === 'white' ? colorToPlay = 'black' : colorToPlay = 'white'
+        colorToPlay === 'white' ? setColorToMove('black') : setColorToMove('white')
         //Place the moving piece in the square
         ev.target.parentNode.append(document.getElementById(movingPiece.id)); 
         //Remove previous piece from the square
@@ -73,7 +76,7 @@ export function drop(ev) {
     if (targetedSquare === 'DIV' && moveIsValid(movingPiece, dropPosition, false)) {
         document.getElementById(movingPiece.id).setAttribute('data-firstmove', false)
         ev.target.append(document.getElementById(movingPiece.id)); 
-        colorToPlay === 'white' ? colorToPlay = 'black' : colorToPlay = 'white'
+        colorToPlay === 'white' ? setColorToMove('black') : setColorToMove('white')
     }
   }
 

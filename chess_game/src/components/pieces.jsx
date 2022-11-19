@@ -277,7 +277,7 @@ const Piece = (props) => {
     piece ? 
       <img
         draggable="true" 
-        onDragStart={dragStart}
+        onDragStart={ev => dragStart(ev, props.colorToMove)}
         id={piece.id} 
         src={piece.src} 
         data-color={piece.color}
